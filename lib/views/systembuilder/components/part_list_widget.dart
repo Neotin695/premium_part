@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permium_parts/views/systembuilder/components/components_item.dart';
-import 'package:permium_parts/views/systembuilder/pages/details_part_page.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../models/component_model.dart';
 import '../bloc/systembuilder_bloc.dart';
+import '../pages/details_part_page.dart';
 
 class PartListView extends StatelessWidget {
   final Components component;
   final Function()? onViewAllPressed;
-  final Function(ComponentModel part) onItemPressed;
-  const PartListView(
-      {super.key,
-      required this.component,
-      required this.onViewAllPressed,
-      required this.onItemPressed});
+
+  const PartListView({
+    super.key,
+    required this.component,
+    required this.onViewAllPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    SystembuilderBloc bloc = SystembuilderBloc.get(context);
     return BlocProvider(
       create: (context) =>
           SystembuilderBloc()..add(LoadAllParts(components: component)),
@@ -56,7 +54,9 @@ class PartListView extends StatelessWidget {
 
                         return InkWell(
                             onTap: () {
-                              onItemPressed(part);
+                              Navigator.pushNamed(
+                                  context, DetailsPartPage.routeName,
+                                  arguments: part);
                             },
                             child: ComponentsItem(basePartModel: part));
                       },
