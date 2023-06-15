@@ -10,7 +10,7 @@ class DetailsPartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final part = ModalRoute.of(context)!.settings.arguments;
-    SystembuilderBloc bloc = SystembuilderBloc.get(context);
+
     return Scaffold(
       appBar: AppBar(),
       body: BlocProvider(
@@ -21,7 +21,7 @@ class DetailsPartPage extends StatelessWidget {
             if (state is LoadViewState) {
               return state.view;
             }
-            return const Center(child: Text('somthing went wrong!!'));
+            return const Center(child: Text('somthing went wrong!!!'));
           },
         ),
       ),

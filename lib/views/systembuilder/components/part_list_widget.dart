@@ -4,17 +4,18 @@ import 'package:permium_parts/views/systembuilder/components/components_item.dar
 import 'package:permium_parts/views/systembuilder/pages/details_part_page.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../models/component_model.dart';
 import '../bloc/systembuilder_bloc.dart';
 
 class PartListView extends StatelessWidget {
   final Components component;
   final Function()? onViewAllPressed;
-  final Function()? onItemPressed;
+  final Function(ComponentModel part) onItemPressed;
   const PartListView(
       {super.key,
       required this.component,
       required this.onViewAllPressed,
-      this.onItemPressed});
+      required this.onItemPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +52,11 @@ class PartListView extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemCount: state.parts.length,
                       itemBuilder: (_, index) {
-                        final part =
-                            bloc.handleDataTypes(component, state.parts[index]);
+                        final part = state.parts[index];
 
                         return InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, DetailsPartPage.routeName,
-                                  arguments: part);
+                              onItemPressed(part);
                             },
                             child: ComponentsItem(basePartModel: part));
                       },

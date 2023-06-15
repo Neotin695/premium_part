@@ -30,6 +30,7 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
   static SystembuilderBloc get(context) => BlocProvider.of(context);
   SystembuilderBloc() : super(SystembuilderInitial()) {
     on<LoadAllParts>(_loadAllParts);
+    on<HandleViewEvent>(_handleView);
   }
   final Dio dio = Dio();
 
@@ -109,77 +110,60 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
     }
   }
 
-  FutureOr<void> handleView(event, emit) {
+  FutureOr<void> _handleView(event, emit) {
     if (event is HandleViewEvent) {
-      switch (event.model) {
-        case CpuModel:
-          emit(
-            LoadViewState(
-              view: CpuDetailsView(componentModel: event.model as CpuModel),
-            ),
-          );
-          break;
-        case GpuModel:
-          emit(
-            LoadViewState(
-              view: GpuDetailsView(componentModel: event.model as GpuModel),
-            ),
-          );
-          break;
-        case MotherboardModel:
-          emit(
-            LoadViewState(
-              view: MotherboardDetailsView(
-                  componentModel: event.model as MotherboardModel),
-            ),
-          );
-          break;
-        case MemoriesModel:
-          emit(
-            LoadViewState(
-              view: MemoriesDetailsView(
-                  componentModel: event.model as MemoriesModel),
-            ),
-          );
-          break;
-        case CoolerModel:
-          emit(
-            LoadViewState(
-              view:
-                  CoolerDetailsView(componentModel: event.model as CoolerModel),
-            ),
-          );
-          break;
-        case PowerSuppliesModel:
-          emit(
-            LoadViewState(
-              view: PowerSuppliesDetailsView(
-                  componentModel: event.model as PowerSuppliesModel),
-            ),
-          );
-          break;
-        case StorageModel:
-          emit(
-            LoadViewState(
-              view: StorageDetailsView(
-                  componentModel: event.model as StorageModel),
-            ),
-          );
-          break;
-        case CaseModel:
-          emit(
-            LoadViewState(
-              view: CaseDetailsView(componentModel: event.model as CaseModel),
-            ),
-          );
-          break;
-
-        default:
-          emit(
-            LoadViewState(
-              view: CpuDetailsView(componentModel: event.model as CpuModel),
-            ),
-          );
+      if (event.model is CpuModel) {
+        emit(
+          LoadViewState(
+            view: CpuDetailsView(componentModel: event.model as CpuModel),
+          ),
+        );
+      } else if (event.model is GpuModel) {
+        emit(
+          LoadViewState(
+            view: GpuDetailsView(componentModel: event.model as GpuModel),
+          ),
+        );
+      } else if (event.model is MotherboardModel) {
+        emit(
+          LoadViewState(
+            view: MotherboardDetailsView(
+                componentModel: event.model as MotherboardModel),
+          ),
+        );
+      } else if (event.model is MemoriesModel) {
+        emit(
+          LoadViewState(
+            view: MemoriesDetailsView(
+                componentModel: event.model as MemoriesModel),
+          ),
+        );
+      } else if (event.model is CoolerModel) {
+        emit(
+          LoadViewState(
+            view: CoolerDetailsView(componentModel: event.model as CoolerModel),
+          ),
+        );
+      } else if (event.model is PowerSuppliesModel) {
+        emit(
+          LoadViewState(
+            view: PowerSuppliesDetailsView(
+                componentModel: event.model as PowerSuppliesModel),
+          ),
+        );
+      } else if (event.model is StorageModel) {
+        emit(
+          LoadViewState(
+            view:
+                StorageDetailsView(componentModel: event.model as StorageModel),
+          ),
+        );
+      } else if (event.model is CaseModel) {
+        emit(
+          LoadViewState(
+            view: CaseDetailsView(componentModel: event.model as CaseModel),
+          ),
+        );
       }
     }
   }

@@ -1,12 +1,19 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permium_parts/models/case_model.dart';
+import 'package:permium_parts/models/cooler_model.dart';
 import 'package:permium_parts/models/cpu_model.dart';
+import 'package:permium_parts/models/gpu_mdoel.dart';
+import 'package:permium_parts/models/memories_model.dart';
+import 'package:permium_parts/models/mother_board_model.dart';
+import 'package:permium_parts/models/power_supplies_model.dart';
 import 'package:permium_parts/views/systembuilder/bloc/systembuilder_bloc.dart';
 import 'package:permium_parts/views/systembuilder/pages/all_parts_page.dart';
 import 'package:sizer/sizer.dart';
 
 import '../components/part_list_widget.dart';
+import '../pages/details_part_page.dart';
 
 class SystembuilderView extends StatelessWidget {
   const SystembuilderView({super.key});
@@ -62,6 +69,10 @@ class SystembuilderView extends StatelessWidget {
                   ),
                   PartListView(
                     component: Components.cpus,
+                    onItemPressed: (part) {
+                      Navigator.pushNamed(context, DetailsPartPage.routeName,
+                          arguments: part as CpuModel);
+                    },
                     onViewAllPressed: () {
                       Navigator.pushNamed(context, AllPartsPage.routeName,
                           arguments: Components.cpus);
@@ -69,12 +80,20 @@ class SystembuilderView extends StatelessWidget {
                   ),
                   PartListView(
                     component: Components.gpus,
+                    onItemPressed: (part) {
+                      Navigator.pushNamed(context, DetailsPartPage.routeName,
+                          arguments: part as GpuModel);
+                    },
                     onViewAllPressed: () {
                       Navigator.pushNamed(context, AllPartsPage.routeName,
                           arguments: Components.gpus);
                     },
                   ),
                   PartListView(
+                    onItemPressed: (part) {
+                      Navigator.pushNamed(context, DetailsPartPage.routeName,
+                          arguments: part as MotherboardModel);
+                    },
                     component: Components.motherboards,
                     onViewAllPressed: () {
                       Navigator.pushNamed(context, AllPartsPage.routeName,
@@ -83,6 +102,10 @@ class SystembuilderView extends StatelessWidget {
                   ),
                   PartListView(
                     component: Components.coolers,
+                    onItemPressed: (part) {
+                      Navigator.pushNamed(context, DetailsPartPage.routeName,
+                          arguments: part as CoolerModel);
+                    },
                     onViewAllPressed: () {
                       Navigator.pushNamed(context, AllPartsPage.routeName,
                           arguments: Components.coolers);
@@ -90,6 +113,10 @@ class SystembuilderView extends StatelessWidget {
                   ),
                   PartListView(
                     component: Components.powersupplies,
+                    onItemPressed: (part) {
+                      Navigator.pushNamed(context, DetailsPartPage.routeName,
+                          arguments: part as PowerSuppliesModel);
+                    },
                     onViewAllPressed: () {
                       Navigator.pushNamed(context, AllPartsPage.routeName,
                           arguments: Components.powersupplies);
@@ -97,6 +124,10 @@ class SystembuilderView extends StatelessWidget {
                   ),
                   PartListView(
                     component: Components.cases,
+                    onItemPressed: (part) {
+                      Navigator.pushNamed(context, DetailsPartPage.routeName,
+                          arguments: part as CaseModel);
+                    },
                     onViewAllPressed: () {
                       Navigator.pushNamed(context, AllPartsPage.routeName,
                           arguments: Components.cases);
@@ -104,6 +135,10 @@ class SystembuilderView extends StatelessWidget {
                   ),
                   PartListView(
                     component: Components.memories,
+                    onItemPressed: (part) {
+                      Navigator.pushNamed(context, DetailsPartPage.routeName,
+                          arguments: part as MemoriesModel);
+                    },
                     onViewAllPressed: () {
                       Navigator.pushNamed(context, AllPartsPage.routeName,
                           arguments: Components.memories);

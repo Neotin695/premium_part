@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:permium_parts/models/component_model.dart';
-import 'package:permium_parts/models/cpu_model.dart';
 import 'package:permium_parts/models/mother_board_model.dart';
 import 'package:permium_parts/views/systembuilder/bloc/systembuilder_bloc.dart';
 
