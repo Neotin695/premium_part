@@ -5,11 +5,10 @@ import 'package:permium_parts/views/auth/pages/sign_in_page.dart';
 
 class PermiumApp extends MaterialApp {
   final RouteGenerator routeGenerator;
-   PermiumApp(this.routeGenerator, {super.key})
+  PermiumApp(this.routeGenerator, {super.key})
       : super(
-        debugShowCheckedModeBanner: false,
-          home: const SignInPage(),
-          initialRoute: DecisionsTree.routeName,
-          onGenerateRoute: routeGenerator.generateRoute
-        );
+            debugShowCheckedModeBanner: false,
+            home: const SignInPage(),
+            initialRoute: DecisionsTree.routeName,
+            onGenerateRoute: routeGenerator.generateRoute);
 }

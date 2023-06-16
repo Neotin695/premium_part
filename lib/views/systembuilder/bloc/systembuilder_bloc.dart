@@ -13,16 +13,8 @@ import 'package:permium_parts/models/memories_model.dart';
 import 'package:permium_parts/models/mother_board_model.dart';
 import 'package:permium_parts/models/power_supplies_model.dart';
 import 'package:permium_parts/models/storage_model.dart';
-import 'package:permium_parts/views/systembuilder/views/detailsviews/gpu_details_view.dart';
 
 import '../../../models/selected_part_model.dart';
-import '../views/detailsviews/case_details_view.dart';
-import '../views/detailsviews/cooler_details_view.dart';
-import '../views/detailsviews/cpu_details_view.dart';
-import '../views/detailsviews/memory_details_view.dart';
-import '../views/detailsviews/motherboard_details_view.dart';
-import '../views/detailsviews/power_supplies_details_view.dart';
-import '../views/detailsviews/storage_details_view.dart';
 
 part 'systembuilder_event.dart';
 part 'systembuilder_state.dart';
@@ -31,33 +23,30 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
   static SystembuilderBloc get(context) => BlocProvider.of(context);
   SystembuilderBloc() : super(SystembuilderInitial()) {
     on<LoadAllParts>(_loadAllParts);
-    on<HandleViewEvent>(_handleView);
+
     on<AddComponent>(_addComponent);
     on<LoadSelectedParts>(_loadSelectedPart);
   }
 
   FutureOr<void> _loadSelectedPart(event, emit) async {
-
     emit(LoadingState());
     if (event is LoadSelectedParts) {
-    
       try {
-      
         final response =
-            await dio.get('${ApiConst.baseUrl}${ApiConst.selectedPartPath}');
+            await dio.get(ApiConst.baseUrl + ApiConst.selectedPartPath);
         if (response.statusCode == 200) {
           emit(LoadedSelectedPart(
               selectedPartModel: SelectedPartModel.fromMap(
                   response.data as Map<String, dynamic>)));
         } else {
+          print(response.data);
           emit(LoadedSelectedFailure(message: 'please try again later'));
         }
-       
       } on DioError catch (dioErr) {
-        
+        print('dio err: ${dioErr.message}');
         emit(LoadedSelectedFailure(message: dioErr.message.toString()));
       } catch (err) {
-        
+        print('err: $err');
         emit(LoadedSelectedFailure(message: err.toString()));
       }
     }
@@ -77,10 +66,8 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
           emit(AddedFailure(message: 'please try again later'));
         }
       } on DioError catch (dioErr) {
-        
         emit(AddedFailure(message: dioErr.message.toString()));
       } catch (err) {
-        
         emit(AddedFailure(message: err.toString()));
       }
     }
@@ -159,64 +146,6 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
         return componentModel as PowerSuppliesModel;
       default:
         return componentModel;
-    }
-  }
-
-  FutureOr<void> _handleView(event, emit) {
-    if (event is HandleViewEvent) {
-      if (event.model is CpuModel) {
-        emit(
-          LoadViewState(
-            view: CpuDetailsView(componentModel: event.model as CpuModel),
-          ),
-        );
-      } else if (event.model is GpuModel) {
-        emit(
-          LoadViewState(
-            view: GpuDetailsView(componentModel: event.model as GpuModel),
-          ),
-        );
-      } else if (event.model is MotherboardModel) {
-        emit(
-          LoadViewState(
-            view: MotherboardDetailsView(
-                componentModel: event.model as MotherboardModel),
-          ),
-        );
-      } else if (event.model is MemoriesModel) {
-        emit(
-          LoadViewState(
-            view: MemoriesDetailsView(
-                componentModel: event.model as MemoriesModel),
-          ),
-        );
-      } else if (event.model is CoolerModel) {
-        emit(
-          LoadViewState(
-            view: CoolerDetailsView(componentModel: event.model as CoolerModel),
-          ),
-        );
-      } else if (event.model is PowerSuppliesModel) {
-        emit(
-          LoadViewState(
-            view: PowerSuppliesDetailsView(
-                componentModel: event.model as PowerSuppliesModel),
-          ),
-        );
-      } else if (event.model is StorageModel) {
-        emit(
-          LoadViewState(
-            view:
-                StorageDetailsView(componentModel: event.model as StorageModel),
-          ),
-        );
-      } else if (event.model is CaseModel) {
-        emit(
-          LoadViewState(
-            view: CaseDetailsView(componentModel: event.model as CaseModel),
-          ),
-        );
-      }
     }
   }
 }

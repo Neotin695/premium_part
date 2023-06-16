@@ -32,7 +32,7 @@ class PowerSuppliesDetailsView extends StatelessWidget {
           children: [
             Image.asset('assets/images/placeholder.png'),
             Text(componentModel.title),
-            Text(componentModel.modular),
+            Text(componentModel.efficiency.toString()),
           ElevatedButton(
             onPressed: () {
               bloc.add(

@@ -1,9 +1,5 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// {@template counter_observer}
-/// [BlocObserver] for the counter application which
-/// observes all state changes.
-/// {@endtemplate}
 class CounterObserver extends BlocObserver {
   /// {@macro counter_observer}
   const CounterObserver();
