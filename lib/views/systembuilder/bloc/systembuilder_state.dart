@@ -20,6 +20,31 @@ class PartsLoadedFailure extends SystembuilderState {
 
 class PartsLoading extends SystembuilderState {}
 
+class LoadingState extends SystembuilderState {}
+
+class AddedSuccessfully extends SystembuilderState {}
+
+class LoadedSelectedFailure extends SystembuilderState {
+  final String message;
+  LoadedSelectedFailure({
+    required this.message,
+  });
+}
+
+class LoadedSelectedPart extends SystembuilderState {
+  final SelectedPartModel selectedPartModel;
+  LoadedSelectedPart({
+    required this.selectedPartModel,
+  });
+}
+
+class AddedFailure extends SystembuilderState {
+  final String message;
+  AddedFailure({
+    required this.message,
+  });
+}
+
 class LoadViewState extends SystembuilderState {
   final Widget view;
   LoadViewState({

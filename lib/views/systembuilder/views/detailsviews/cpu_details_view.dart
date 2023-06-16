@@ -12,6 +12,7 @@ class CpuDetailsView extends StatelessWidget {
         Image.asset('assets/images/placeholder.png'),
         Text(componentModel.title),
         Text(componentModel.coreClock.toString()),
+        Text(componentModel.power.toString()),
       ],
     );
   }

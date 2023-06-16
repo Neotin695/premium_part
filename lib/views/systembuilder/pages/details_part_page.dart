@@ -21,7 +21,7 @@ class DetailsPartPage extends StatelessWidget {
             if (state is LoadViewState) {
               return state.view;
             }
-            return const Center(child: Text('somthing went wrong!!!'));
+            return const Center(child: Text('somthing went !!!'));
           },
         ),
       ),

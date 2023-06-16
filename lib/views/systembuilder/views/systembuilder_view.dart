@@ -103,6 +103,13 @@ class SystembuilderView extends StatelessWidget {
                     },
                   ),
                   PartListView(
+                    component: Components.storages,
+                    onViewAllPressed: () {
+                      Navigator.pushNamed(context, AllPartsPage.routeName,
+                          arguments: Components.storages);
+                    },
+                  ),
+                  PartListView(
                     component: Components.memories,
                     onViewAllPressed: () {
                       Navigator.pushNamed(context, AllPartsPage.routeName,

@@ -28,3 +28,14 @@ class HandleViewEvent extends SystembuilderEvent {
     required this.model,
   });
 }
+
+class LoadSelectedParts extends SystembuilderEvent {}
+
+class AddComponent extends SystembuilderEvent {
+  final String slug;
+  final Components components;
+  AddComponent(
+    this.components, {
+    required this.slug,
+  });
+}

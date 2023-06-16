@@ -15,6 +15,7 @@ import 'package:permium_parts/models/power_supplies_model.dart';
 import 'package:permium_parts/models/storage_model.dart';
 import 'package:permium_parts/views/systembuilder/views/detailsviews/gpu_details_view.dart';
 
+import '../../../models/selected_part_model.dart';
 import '../views/detailsviews/case_details_view.dart';
 import '../views/detailsviews/cooler_details_view.dart';
 import '../views/detailsviews/cpu_details_view.dart';
@@ -31,8 +32,59 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
   SystembuilderBloc() : super(SystembuilderInitial()) {
     on<LoadAllParts>(_loadAllParts);
     on<HandleViewEvent>(_handleView);
+    on<AddComponent>(_addComponent);
+    on<LoadSelectedParts>(_loadSelectedPart);
   }
+
+  FutureOr<void> _loadSelectedPart(event, emit) async {
+
+    emit(LoadingState());
+    if (event is LoadSelectedParts) {
+    
+      try {
+      
+        final response =
+            await dio.get('${ApiConst.baseUrl}${ApiConst.selectedPartPath}');
+        if (response.statusCode == 200) {
+          emit(LoadedSelectedPart(
+              selectedPartModel: SelectedPartModel.fromMap(
+                  response.data as Map<String, dynamic>)));
+        } else {
+          emit(LoadedSelectedFailure(message: 'please try again later'));
+        }
+       
+      } on DioError catch (dioErr) {
+        
+        emit(LoadedSelectedFailure(message: dioErr.message.toString()));
+      } catch (err) {
+        
+        emit(LoadedSelectedFailure(message: err.toString()));
+      }
+    }
+  }
+
   final Dio dio = Dio();
+
+  FutureOr<void> _addComponent(event, emit) async {
+    emit(LoadingState());
+    if (event is AddComponent) {
+      try {
+        final response = await dio.get(
+            '${ApiConst.baseUrl}${ApiConst.addPartPath}/${event.components.name}/${event.slug}');
+        if (response.statusCode == 200) {
+          emit(AddedSuccessfully());
+        } else {
+          emit(AddedFailure(message: 'please try again later'));
+        }
+      } on DioError catch (dioErr) {
+        
+        emit(AddedFailure(message: dioErr.message.toString()));
+      } catch (err) {
+        
+        emit(AddedFailure(message: err.toString()));
+      }
+    }
+  }
 
   FutureOr<void> _loadAllParts(event, emit) async {
     if (event is LoadAllParts) {

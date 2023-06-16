@@ -7,6 +7,7 @@ class PermiumApp extends MaterialApp {
   final RouteGenerator routeGenerator;
    PermiumApp(this.routeGenerator, {super.key})
       : super(
+        debugShowCheckedModeBanner: false,
           home: const SignInPage(),
           initialRoute: DecisionsTree.routeName,
           onGenerateRoute: routeGenerator.generateRoute
