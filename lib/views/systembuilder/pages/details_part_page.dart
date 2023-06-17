@@ -33,11 +33,7 @@ class DetailsPartPage extends StatelessWidget {
         title: Text((part as ComponentModel).title),
       ),
       body: BlocProvider(
-          create: (context) => SystembuilderBloc()
-            ..add(
-              HandleViewEvent(model: part),
-            ),
-          child: handleView(part)),
+          create: (context) => SystembuilderBloc(), child: handleView(part)),
     );
   }
 

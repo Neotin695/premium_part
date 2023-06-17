@@ -11,15 +11,10 @@ class AllPartsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final component = ModalRoute.of(context)!.settings.arguments as Components;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(component.name),
-      ),
-      body: BlocProvider(
-        create: (context) => SystembuilderBloc(),
-        child: AllPartsView(
-          component: component,
-        ),
+    return BlocProvider(
+      create: (context) => SystembuilderBloc(),
+      child: AllPartsView(
+        component: component,
       ),
     );
   }

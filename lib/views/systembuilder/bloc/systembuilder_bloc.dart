@@ -27,26 +27,27 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
     on<AddComponent>(_addComponent);
     on<LoadSelectedParts>(_loadSelectedPart);
   }
+  final TextEditingController search = TextEditingController();
+  List<ComponentModel> components = [];
 
   FutureOr<void> _loadSelectedPart(event, emit) async {
     emit(LoadingState());
     if (event is LoadSelectedParts) {
       try {
         final response =
-            await dio.get(ApiConst.baseUrl + ApiConst.selectedPartPath);
+            await dio.get(ApiConst.baseUrl + ApiConst.selectedPartPath,
+                options: Options(headers: {
+                  'Accept': 'application/json',
+                }));
         if (response.statusCode == 200) {
           emit(LoadedSelectedPart(
-              selectedPartModel: SelectedPartModel.fromMap(
-                  response.data as Map<String, dynamic>)));
+              selectedPartModel: SelectedPartModel.fromMap(response.data)));
         } else {
-          print(response.data);
           emit(LoadedSelectedFailure(message: 'please try again later'));
         }
       } on DioError catch (dioErr) {
-        print('dio err: ${dioErr.message}');
         emit(LoadedSelectedFailure(message: dioErr.message.toString()));
       } catch (err) {
-        print('err: $err');
         emit(LoadedSelectedFailure(message: err.toString()));
       }
     }

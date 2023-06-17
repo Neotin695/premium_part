@@ -1,6 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permium_parts/core/common/common.dart';
 import 'package:permium_parts/models/storage_model.dart';
 import 'package:permium_parts/views/systembuilder/components/circular_dot.dart';
 import 'package:sizer/sizer.dart';
@@ -14,7 +15,6 @@ class StorageDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystembuilderBloc bloc = SystembuilderBloc.get(context);
     return BlocListener<SystembuilderBloc, SystembuilderState>(
       listener: (context, state) {
         if (state is LoadingState) {
@@ -76,20 +76,13 @@ class StorageDetailsView extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                bloc.add(AddComponent(Components.storages,
-                    slug: componentModel.slug));
+                Common.selectedPart.storage.add(componentModel);
               },
               child: const Text('Add Components'),
             ),
             ElevatedButton(
               onPressed: () async {
-                if (!await launchUrl(Uri.parse(componentModel.link))) {
-                  // ignore: use_build_context_synchronously
-                  CoolAlert.show(
-                      context: context,
-                      type: CoolAlertType.error,
-                      text: 'Could not launch${componentModel.link}');
-                }
+                if (!await launchUrl(Uri.parse(componentModel.link))) {}
               },
               child: const Text('Buy'),
             ),

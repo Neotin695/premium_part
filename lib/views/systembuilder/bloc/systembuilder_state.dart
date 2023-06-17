@@ -6,8 +6,9 @@ abstract class SystembuilderState {}
 
 class SystembuilderInitial extends SystembuilderState {}
 
+// ignore: must_be_immutable
 class PartsLoadedSuccess extends SystembuilderState {
-  final List<ComponentModel> parts;
+  List<ComponentModel> parts;
   PartsLoadedSuccess({
     required this.parts,
   });
