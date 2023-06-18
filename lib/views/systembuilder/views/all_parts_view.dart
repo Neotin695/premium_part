@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permium_parts/views/systembuilder/bloc/systembuilder_bloc.dart';
 import 'package:permium_parts/views/systembuilder/pages/details_part_page.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../core/constances/api_const.dart';
 import '../components/search_delegate.dart';
 
 class AllPartsView extends StatefulWidget {
@@ -67,12 +69,14 @@ class _AllPartsViewState extends State<AllPartsView> {
                                     context, DetailsPartPage.routeName,
                                     arguments: part);
                               },
-                              leading: Image.asset(
-                                'assets/images/placeholder.png',
-                                width: 20.w,
-                                height: 20.h,
-                                fit: BoxFit.cover,
-                              ),
+                              leading: CachedNetworkImage(
+                                  height: 5.h,
+                                  fit: BoxFit.cover,
+                                  imageUrl:
+                                      '${ApiConst.baseUrlImage}/normal_user/image/${widget.component.name}/${part.image}',
+                                  progressIndicatorBuilder: (_, url, don) {
+                                    return const CircularProgressIndicator();
+                                  }),
                               title: Text(part.title),
                             ),
                             const Divider()

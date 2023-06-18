@@ -58,7 +58,10 @@ class PartListView extends StatelessWidget {
                                   context, DetailsPartPage.routeName,
                                   arguments: part);
                             },
-                            child: ComponentsItem(basePartModel: part));
+                            child: ComponentsItem(
+                              basePartModel: part,
+                              components: component,
+                            ));
                       },
                     ),
                   ),

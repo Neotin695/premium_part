@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:permium_parts/views/systembuilder/components/circular_dot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/constances/api_const.dart';
 import '../../bloc/systembuilder_bloc.dart';
 
 class StorageDetailsView extends StatelessWidget {
@@ -35,7 +37,14 @@ class StorageDetailsView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset('assets/images/placeholder.png'),
+            CachedNetworkImage(
+               
+                fit: BoxFit.cover,
+                imageUrl:
+                    '${ApiConst.baseUrlImage}/normal_user/image/storages/${componentModel.image}',
+                progressIndicatorBuilder: (_, url, don) {
+                  return const CircularProgressIndicator();
+                }),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(

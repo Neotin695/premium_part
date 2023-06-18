@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:permium_parts/models/cpu_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common/common.dart';
+import '../../../../core/constances/api_const.dart';
 import '../../components/circular_dot.dart';
 
 class CpuDetailsView extends StatelessWidget {
@@ -15,7 +17,14 @@ class CpuDetailsView extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Image.asset('assets/images/placeholder.png'),
+           CachedNetworkImage(
+                
+                fit: BoxFit.cover,
+                imageUrl:
+                    '${ApiConst.baseUrlImage}/normal_user/image/cpus/${componentModel.image}',
+                progressIndicatorBuilder: (_, url, don) {
+                  return const CircularProgressIndicator();
+                }),
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(

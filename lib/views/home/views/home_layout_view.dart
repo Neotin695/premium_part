@@ -30,24 +30,23 @@ class _HomeLayoutViewState extends State<HomeLayoutView> {
         backgroundColor: Colors.white,
         items: const [
           BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  size: 20,
-                ),
-                label: "Home"),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.add_shopping_cart_outlined,
-                  size: 20,
-                ),
-                label: "Collections"),
-           
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.supervisor_account_outlined,
-                  size: 20,
-                ),
-                label: "Profile"),
+              icon: Icon(
+                Icons.home,
+                size: 20,
+              ),
+              label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.add_shopping_cart_outlined,
+                size: 20,
+              ),
+              label: "Systembuilder"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.supervisor_account_outlined,
+                size: 20,
+              ),
+              label: "Profile"),
         ],
       ),
     );
