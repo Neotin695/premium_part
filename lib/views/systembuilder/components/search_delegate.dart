@@ -10,10 +10,12 @@ class MySearchDelegate extends SearchDelegate {
   final List<ComponentModel> components;
   final SystembuilderBloc bloc;
   final Components component;
+  String resultAudio = '';
   MySearchDelegate(
     this.bloc,
     this.component, {
     required this.components,
+    this.resultAudio = '',
   });
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -44,6 +46,7 @@ class MySearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     final results =
         components.where((element) => element.title.contains(query)).toList();
+    query = resultAudio;
     return ListView.builder(
       shrinkWrap: true,
       itemCount: results.length,

@@ -11,7 +11,8 @@ class RecordSearch {
 
   bool get isRecording => _audioRecord!.isRecording;
   late Directory _local;
-  String get path => '${_local.absolute.path}/search.aac';
+
+  String get path => '${_local.absolute.path}/search.wav';
 
   Future init() async {
     _audioRecord = FlutterSoundRecorder();
@@ -36,8 +37,7 @@ class RecordSearch {
     if (!_isInitialised) return;
 
     await _audioRecord!.startRecorder(
-      toFile: '${_local.absolute.path}/search.aac',
-    );
+        toFile: '${_local.absolute.path}/search.wav', codec: Codec.pcm16WAV);
   }
 
   Future stop() async {

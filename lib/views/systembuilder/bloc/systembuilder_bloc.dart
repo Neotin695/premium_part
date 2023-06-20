@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,18 +28,41 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
 
     on<AddComponent>(_addComponent);
     on<LoadSelectedParts>(_loadSelectedPart);
-    on<VoiceSearchEvent> ((event,emit){});
+    on<VoiceSearchEvent>(_voiceSearch);
   }
   final TextEditingController search = TextEditingController();
   List<ComponentModel> components = [];
-
-  FutureOr<void> _voiceSearch(event ,emit)async{
-    if(event is VoiceSearchEvent){
-      // try{
-      //   // final response = await dio.post
-      // }
+  final Dio dio = Dio();
+  FutureOr<void> _voiceSearch(event, emit) async {
+    if (event is VoiceSearchEvent) {
+      try {
+        FormData data = FormData.fromMap({
+          'file': await MultipartFile.fromFile(
+            event.path,
+            filename: 'search.wav',
+          ),
+        });
+        final response = await dio.post(
+          'http://192.168.1.2:5000/audio',
+          data:data,
+        );
+        if (response.statusCode == 200) {
+          emit(SuccessSearch(response.data['result']));
+          print(response.data);
+        } else {
+          print(response.data);
+          emit(FailureSearch(response.data));
+        }
+      } on DioError catch (dioErr) {
+        print(dioErr.error);
+        emit(FailureSearch(dioErr.message.toString()));
+      } catch (err) {
+        print(err);
+        emit(FailureSearch(err.toString()));
+      }
     }
   }
+
   FutureOr<void> _loadSelectedPart(event, emit) async {
     emit(LoadingState());
     if (event is LoadSelectedParts) {
@@ -61,7 +86,7 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
     }
   }
 
-  final Dio dio = Dio();
+
 
   FutureOr<void> _addComponent(event, emit) async {
     emit(LoadingState());

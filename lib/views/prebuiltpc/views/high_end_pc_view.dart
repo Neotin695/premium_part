@@ -20,7 +20,7 @@ class HighEndPcView extends StatelessWidget {
               children: state.pcs.map((pc) {
                 return ListTile(
                   title: Text(pc.title),
-                  subtitle: Text('${pc.cpuId}'),
+                  subtitle: Text(pc.cpu!.title),
                 );
               }).toList(),
             );

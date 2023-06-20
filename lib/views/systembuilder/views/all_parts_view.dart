@@ -1,5 +1,6 @@
 import 'package:animated_floating_buttons/widgets/animated_floating_action_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permium_parts/views/systembuilder/bloc/systembuilder_bloc.dart';
@@ -12,6 +13,7 @@ import '../components/search_delegate.dart';
 
 class AllPartsView extends StatefulWidget {
   final Components component;
+
   const AllPartsView({super.key, required this.component});
 
   @override
@@ -41,9 +43,27 @@ class _AllPartsViewState extends State<AllPartsView> {
       body: BlocProvider(
         create: (context) => SystembuilderBloc()
           ..add(LoadAllParts(components: widget.component)),
-        child: BlocBuilder<SystembuilderBloc, SystembuilderState>(
+        child: BlocConsumer<SystembuilderBloc, SystembuilderState>(
+          listener: (context, state) {
+            if (state is SuccessSearch) {
+
+              showSearch(
+                context: context,
+                delegate: MySearchDelegate(bloc, widget.component,
+                    components: (state as PartsLoadedSuccess).parts,
+                    resultAudio: state.valueSearch),
+
+              );
+              print(state.valueSearch);
+            }else if(state is FailureSearch){
+              CoolAlert.show(context: context, type: CoolAlertType.error,text: state.message);
+            }
+          },
           builder: (context, state) {
+
             if (state is PartsLoadedSuccess) {
+
+
               return Scaffold(
                 appBar: AppBar(
                   title: Text(widget.component.name),
@@ -100,13 +120,17 @@ class _AllPartsViewState extends State<AllPartsView> {
                   animatedIconData: AnimatedIcons.menu_close,
                   fabButtons: [
                     FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                       heroTag: 'search_image',
                       child: const Icon(Icons.image),
                     ),
                     FloatingActionButton(
                       onPressed: () async {
-                        await recorder.toggle();
+                        await recorder.toggle().then((value) =>
+                            bloc.add(VoiceSearchEvent(recorder.path)));
+
                         setState(() {});
                       },
                       heroTag: 'search_voice',

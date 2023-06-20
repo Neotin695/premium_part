@@ -15,9 +15,7 @@ class ProfileView extends StatelessWidget {
       create: (context) => ProfileBloc()
         ..add(LoadUserDataEvent(token: Common.prefs.getString('token')!)),
       child: BlocConsumer<ProfileBloc, ProfileState>(
-        listener: (context, state) {
-          
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           if (state is LoadedSuccess) {
             return SafeArea(
@@ -68,39 +66,6 @@ class ProfileView extends StatelessWidget {
                       'Favorites',
                       style: TextStyle(
                         fontSize: 15.sp,
-                        color: Colors.blueAccent,
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  ListTile(
-                    leading: const Icon(Icons.support),
-                    title: Text(
-                      'Customer Support',
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        color: Colors.blueAccent,
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  ListTile(
-                    leading: const Icon(Icons.rate_review),
-                    title: Text(
-                      'Rate Our App',
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        color: Colors.blueAccent,
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  ListTile(
-                    leading: const Icon(Icons.password),
-                    title: Text(
-                      'Change Password',
-                      style: TextStyle(
-                        fontSize: 13.sp,
                         color: Colors.blueAccent,
                       ),
                     ),
