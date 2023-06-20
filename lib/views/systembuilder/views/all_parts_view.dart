@@ -1,3 +1,4 @@
+import 'package:animated_floating_buttons/widgets/animated_floating_action_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:permium_parts/views/systembuilder/pages/details_part_page.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/constances/api_const.dart';
+import '../../../core/services/record_audio.dart';
 import '../components/search_delegate.dart';
 
 class AllPartsView extends StatefulWidget {
@@ -18,11 +20,19 @@ class AllPartsView extends StatefulWidget {
 
 class _AllPartsViewState extends State<AllPartsView> {
   late SystembuilderBloc bloc;
+  final recorder = RecordSearch();
 
   @override
   void initState() {
     bloc = SystembuilderBloc.get(context);
+    recorder.init();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    recorder.dispose();
+    super.dispose();
   }
 
   @override
@@ -83,6 +93,27 @@ class _AllPartsViewState extends State<AllPartsView> {
                           ],
                         );
                       },
+                    ),
+                  ],
+                ),
+                floatingActionButton: AnimatedFloatingActionButton(
+                  animatedIconData: AnimatedIcons.menu_close,
+                  fabButtons: [
+                    FloatingActionButton(
+                      onPressed: () {},
+                      heroTag: 'search_image',
+                      child: const Icon(Icons.image),
+                    ),
+                    FloatingActionButton(
+                      onPressed: () async {
+                        await recorder.toggle();
+                        setState(() {});
+                      },
+                      heroTag: 'search_voice',
+                      backgroundColor:
+                          recorder.isRecording ? Colors.red : Colors.blue,
+                      child:
+                          Icon(recorder.isRecording ? Icons.stop : Icons.mic),
                     ),
                   ],
                 ),

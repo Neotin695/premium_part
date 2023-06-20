@@ -29,6 +29,12 @@ class HandleViewEvent extends SystembuilderEvent {
   });
 }
 
+class VoiceSearchEvent extends SystembuilderEvent{
+  final String path;
+
+  VoiceSearchEvent(this.path);
+}
+
 class LoadSelectedParts extends SystembuilderEvent {}
 
 class AddComponent extends SystembuilderEvent {

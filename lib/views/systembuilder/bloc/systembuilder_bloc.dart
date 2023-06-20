@@ -26,10 +26,18 @@ class SystembuilderBloc extends Bloc<SystembuilderEvent, SystembuilderState> {
 
     on<AddComponent>(_addComponent);
     on<LoadSelectedParts>(_loadSelectedPart);
+    on<VoiceSearchEvent> ((event,emit){});
   }
   final TextEditingController search = TextEditingController();
   List<ComponentModel> components = [];
 
+  FutureOr<void> _voiceSearch(event ,emit)async{
+    if(event is VoiceSearchEvent){
+      // try{
+      //   // final response = await dio.post
+      // }
+    }
+  }
   FutureOr<void> _loadSelectedPart(event, emit) async {
     emit(LoadingState());
     if (event is LoadSelectedParts) {

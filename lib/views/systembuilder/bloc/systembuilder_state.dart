@@ -25,6 +25,20 @@ class LoadingState extends SystembuilderState {}
 
 class AddedSuccessfully extends SystembuilderState {}
 
+class LoadingSearch extends SystembuilderState {}
+
+class SuccessSearch extends SystembuilderState {
+  final String valueSearch;
+
+  SuccessSearch(this.valueSearch);
+}
+
+class FailureSearch extends SystembuilderState {
+  final String message;
+
+  FailureSearch(this.message);
+}
+
 class LoadedSelectedFailure extends SystembuilderState {
   final String message;
   LoadedSelectedFailure({
