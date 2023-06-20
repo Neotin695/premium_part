@@ -11,7 +11,8 @@ class RecordSearch {
 
   bool get isRecording => _audioRecord!.isRecording;
   late Directory _local;
-
+  bool _isShow = false;
+  bool get showSearch => _isShow;
   String get path => '${_local.absolute.path}/search.wav';
 
   Future init() async {
@@ -51,6 +52,7 @@ class RecordSearch {
       await record();
     } else {
       await stop();
+      _isShow = true;
     }
   }
 }

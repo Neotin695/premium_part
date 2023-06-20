@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permium_parts/views/systembuilder/bloc/systembuilder_bloc.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../core/services/record_audio.dart';
 import '../../../models/component_model.dart';
 import '../pages/details_part_page.dart';
 
@@ -17,12 +18,17 @@ class MySearchDelegate extends SearchDelegate {
     required this.components,
     this.resultAudio = '',
   });
+
+  final recorder  = RecordSearch();
+
   @override
   List<Widget>? buildActions(BuildContext context) {
+    recorder.init();
     return [
       IconButton(
         onPressed: () {
           if (query.isEmpty) {
+            recorder.dispose();
             close(context, null);
           } else {
             query = '';
